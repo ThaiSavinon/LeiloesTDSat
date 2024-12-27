@@ -20,7 +20,7 @@ public class conectaDAO {
     public Connection connectDB(){
         Connection conn = null;
         
-                try {
+        try {
         
             conn = DriverManager.getConnection("jdbc:mysql://localhost/uc11?user=root&password=#Am38914950");
             
