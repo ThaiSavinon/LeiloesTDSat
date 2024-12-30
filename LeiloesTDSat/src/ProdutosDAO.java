@@ -58,7 +58,7 @@ public class ProdutosDAO {
                 produto.setId(resultset.getInt("id"));
                 produto.setNome(resultset.getString("nome"));
                 produto.setValor(resultset.getDouble("valor"));
-                
+                produto.setStatus(resultset.getString("status"));
                 listagem.add(produto);
             }
         } catch (Exception e) {
