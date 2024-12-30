@@ -24,13 +24,13 @@ public class ProdutosDAO {
     
     public void cadastrarProduto (ProdutosDTO produto){
         conn = new conectaDAO().connectDB(); 
-        String sql = "INSERT INTO produtos (nome, valor) VALUES (?, ?)";
+        String sql = "INSERT INTO produtos (nome, valor, status) VALUES (?, ?, ?)";
         
         try {
             prep = conn.prepareStatement(sql);
             prep.setString(1, produto.getNome());
             prep.setDouble(2, produto.getValor());
-            
+            prep.setString(3, produto.getStatus());
             prep.executeUpdate();
             JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
         } catch (Exception e) {
@@ -57,7 +57,7 @@ public class ProdutosDAO {
                 ProdutosDTO produto = new ProdutosDTO();
                 produto.setId(resultset.getInt("id"));
                 produto.setNome(resultset.getString("nome"));
-                produto.setValor(resultset.getInt("valor"));
+                produto.setValor(resultset.getDouble("valor"));
                 
                 listagem.add(produto);
             }
@@ -73,6 +73,14 @@ public class ProdutosDAO {
             }
         }
         return listagem;
+    }
+    public void venderProduto(ProdutosDTO p){
+        
+    }
+    public ArrayList<ProdutosDTO> listarProdutosVendidos(){
+        ArrayList<ProdutosDTO> listaVendidos = null;
+        return listaVendidos ;
+        
     }
 }
         
