@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -137,18 +138,18 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
         String id = id_produto_venda.getText();
-        
         ProdutosDAO produtosdao = new ProdutosDAO();
-        produtosdao.venderProduto(Integer.parseInt(id));
+        if(id_produto_venda.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Você deve inserir um id válido no campo de texto!");
+        } else {
+            produtosdao.venderProduto(Integer.parseInt(id));
+        }
         listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
         vendasVIEW vendas = new vendasVIEW(); 
         vendas.setVisible(true);
-        Integer idProdutoVenda = Integer.parseInt(id_produto_venda.getText());
-        ProdutosDAO produto = new ProdutosDAO();
-        produto.venderProduto(idProdutoVenda);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -221,6 +222,7 @@ public class listagemVIEW extends javax.swing.JFrame {
                 });
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao listar os produtos: " + e.getMessage());
         }
     
     }
