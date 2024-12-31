@@ -9,7 +9,7 @@
  */
 public class Principal {
     public static void main (String [] args){
-      cadastroVIEW tela = new cadastroVIEW (); 
+      listagemVIEW tela = new listagemVIEW (); 
       tela.setVisible(true);
     }
 }
