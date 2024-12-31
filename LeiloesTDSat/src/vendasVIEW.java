@@ -1,3 +1,8 @@
+
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -11,6 +16,7 @@ public class vendasVIEW extends javax.swing.JFrame {
  
     public vendasVIEW() {
         initComponents();
+        listarProdutosVendidos();
     }
 
     /**
@@ -24,24 +30,24 @@ public class vendasVIEW extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        listaProdutosVendidos = new javax.swing.JTable();
         btnVoltar = new javax.swing.JButton();
+        lblProdutosVendidos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        listaProdutosVendidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Itens Vendidos"
+                "id", "Nome", "Status", "Valor"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(listaProdutosVendidos);
 
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btnVoltar.setText("VOLTAR");
@@ -52,6 +58,9 @@ public class vendasVIEW extends javax.swing.JFrame {
             }
         });
 
+        lblProdutosVendidos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblProdutosVendidos.setText("Produtos Vendidos");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -60,17 +69,24 @@ public class vendasVIEW extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(294, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnVoltar)
                 .addGap(39, 39, 39))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(103, 103, 103)
+                .addComponent(lblProdutosVendidos)
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(lblProdutosVendidos)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVoltar)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 3, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,11 +147,35 @@ public class vendasVIEW extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void listarProdutosVendidos(){
+        try {
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            
+            DefaultTableModel model = (DefaultTableModel) listaProdutosVendidos.getModel();
+            model.setNumRows(0);
+            
+            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutosVendidos();
+            
+            for(int i = 0; i < listagem.size(); i++){
+                model.addRow(new Object[]{
+                    listagem.get(i).getId(),
+                    listagem.get(i).getNome(),
+                    listagem.get(i).getValor(),
+                    listagem.get(i).getStatus()
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao listar os produtos: " + e.getMessage());
+        }
+    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVoltar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblProdutosVendidos;
+    private javax.swing.JTable listaProdutosVendidos;
     // End of variables declaration//GEN-END:variables
 }

@@ -47,7 +47,7 @@ public class ProdutosDAO {
     // listar produtos
     public ArrayList<ProdutosDTO> listarProdutos() {
         conn = new conectaDAO().connectDB();
-        String sql = "SELECT * FROM produtos";
+        String sql = "SELECT * FROM produtos WHERE status <> 'Vendido'";
         
         try {
             prep = conn.prepareStatement(sql);
@@ -94,10 +94,10 @@ public class ProdutosDAO {
         }
     }
     public ArrayList<ProdutosDTO> listarProdutosVendidos(){
-        ArrayList<ProdutosDTO> listaVendidos = null;
+        ArrayList<ProdutosDTO> listaVendidos = new ArrayList<>();
         conn = new conectaDAO().connectDB();
-        String sql = "SELECT * FROM produtos set status= 'Vendido'";
-                try {
+        String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+        try {
             prep = conn.prepareStatement(sql);
             resultset = prep.executeQuery();
             
